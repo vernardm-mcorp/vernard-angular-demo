@@ -1,0 +1,1011 @@
+@use 'sass:math';
+// This SCSS file contains global style definitions for the project. If a certain class/ID style needs to be implemented in different places or across different components, PUT THEM HERE. If a style is only used for a certain component, define it within the component SCSS.
+
+body {
+  color: $sys-black;
+  font-family: $bodyFont;
+  font-weight: 400;
+}
+
+// probably wont use h5-h6...
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $headerFont;
+  line-height: normal;
+  color: $theme-primary;
+  margin-bottom: 0.67em;
+}
+
+.mat-card-title,
+[role='heading'] {
+  font-family: $headerFont;
+  line-height: normal;
+}
+
+h1 {
+  font-size: 2.4em;
+}
+
+h2 {
+  font-size: 2.25em;
+}
+
+//overrides heading sizing but maintain heading hierarchy designation
+
+h1.supertitle,
+h2.supertitle,
+h3.supertitle,
+h4.supertitle,
+h5.supertitle,
+h6.supertitle {
+  font-size: 2.55em;
+}
+
+//stylized headers
+.content-header {
+  display: block;
+  margin-bottom: 2em;
+  padding: 0px 15px;
+
+  h1,
+  h2,
+  h3 {
+    display: inline-block;
+    margin: 0;
+
+    &:after {
+      content: '';
+      display: block;
+      width: 50%;
+      height: 3px;
+      margin-top: 0.33em;
+      background-color: $theme-tertiary;
+    }
+  }
+}
+
+// do not display these elements when printing the page
+@media print {
+  .noprint,
+  .noprint * {
+    visibility: hidden;
+    display: none !important;
+  }
+
+  .showprint {
+    visibility: visible;
+    display: initial !important;
+  }
+}
+
+code,
+pre {
+  font-family: $mono;
+  color: $mat-success-green;
+}
+
+code {
+  display: inline-block;
+}
+
+pre {
+  display: block;
+  background-color: tint($mat-success-green, 90%);
+  padding: 8px;
+}
+
+a {
+  color: $theme-primary;
+
+  &:hover,
+  &:focus {
+    color: $theme-tertiary;
+  }
+}
+
+strong,
+.bold {
+  font-weight: 700;
+}
+
+.light {
+  font-weight: 400;
+}
+
+em,
+.em {
+  font-style: oblique;
+}
+
+.uline,
+.underline {
+  text-decoration: underline;
+}
+
+// stylelize blockquote? Because inspirational words?
+blockquote {
+  background: $theme-primary;
+  border: 1px $sys-lightgray solid;
+  border-radius: 5px;
+  padding: 0.5em 15px 1em;
+  margin: 0 auto;
+  font-size: 18px;
+
+  @media #{$lg} {
+    width: 75%;
+    padding: 0.5em 1 - math.div(5, 8) * 100px 2.5em;
+  }
+}
+
+article blockquote,
+cite,
+article {
+  > p,
+  > ul,
+  > table,
+  > div {
+    margin-bottom: 1.5em;
+  }
+
+  > ul {
+    margin-block-start: 0rem;
+    margin-block-end: 1rem;
+    margin-inline-start: 0px;
+    margin-inline-end: 16%;
+    padding-inline-start: 1.618em;
+  }
+}
+
+ul li,
+ul li p,
+ul li span,
+ul li a,
+ul li cite {
+  overflow-wrap: break-word;
+}
+
+ul.no-bullet {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0px auto 1.5em;
+
+  li {
+    padding: 0px;
+    margin: 0 0 0.14em 0;
+    text-indent: 0em;
+    white-space: pre-line;
+  }
+}
+
+// Scroll bar stylize
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $sys-lightgray;
+  border-radius: 4px;
+
+  /* Handle on hover */
+  &:hover {
+    background: $theme-primary;
+  }
+
+  /* Handle on drag */
+  &:active {
+    background: rgba($theme-primary, 75%);
+  }
+}
+
+.dark-blue {
+  background-color: $theme-tertiary;
+  color: #fff;
+}
+
+.blue {
+  background-color: $theme-primary;
+  color: #fff;
+}
+
+.light-blue {
+  background-color: $theme-primary;
+  color: #fff;
+}
+
+.text-blue {
+  color: $theme-primary;
+}
+
+.text-yellow {
+  color: $theme-secondary;
+}
+
+.text-orange {
+  color: $theme-tertiary;
+}
+
+.text-dark-blue {
+  color: $theme-tertiary;
+}
+
+.text-light-blue {
+  color: $theme-primary;
+}
+
+.text-black {
+  color: $sys-black;
+}
+
+.text-dark-grey {
+  color: $sys-darkgray;
+}
+
+.text-grey {
+  color: $sys-gray;
+}
+
+.text-light-grey {
+  color: $sys-lightgray;
+}
+
+.text-green {
+  color: $mat-success-green;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+main {
+  text-align: center;
+}
+
+hr {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+// For select all checkbox on a mat-select with checkboxes
+.listbox-checkbox-all {
+  padding: 15px;
+}
+
+.splash {
+  display: flex;
+  height: auto;
+  min-height: unset;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  @media #{$lg} {
+    min-height: 90vw - (100 * math.div(9, 16));
+  }
+}
+
+.attention {
+  text-align: left;
+
+  .mat-card-title,
+  .mat-card-subtitle {
+    text-align: center;
+  }
+}
+
+label .required:after {
+  content: '\002A'; //an asterisk
+  display: inline-block;
+  font-size: 18px;
+  vertical-align: super;
+  transform: translate(0.1em, 0.3em);
+  line-height: 0px;
+  color: $mat-error-red;
+}
+
+.mat-card {
+  width: auto;
+
+  p {
+    margin-bottom: 0.67em;
+  }
+}
+
+.desktop-view {
+  display: flex;
+  justify-content: flex-end;
+
+  .navigation-menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .menu-items ul {
+    display: flex;
+    list-style: none;
+    @include zeroAll;
+
+    li {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.mobile-view {
+  .navigation-menu {
+    text-align: center;
+  }
+
+  nav.menu-items {
+    > ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: nowrap;
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+
+      @media only screen and (max-height: 600px) {
+        max-height: 600px;
+        overflow: auto;
+      }
+
+      li {
+        display: flex;
+        flex-basis: 100%;
+        border-bottom: 1px $sys-gray solid;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+nav.menu-items {
+  ul.submenu {
+    display: flex;
+  }
+}
+
+.topnav-tooltip {
+  background-color: $theme-secondary;
+  color: $sys-black !important;
+  font-size: 16px;
+  border: 1px shade($theme-secondary, 10%) solid;
+}
+
+// Fix for the weird ghosting of submenus.  See public-layout.component
+.mat-drawer.menuIsClosed {
+  nav.menu-items ul.submenu {
+    display: none;
+  }
+}
+
+#bodyContent {
+  position: relative;
+  top: unset;
+
+  //special adjustments for mobile devices
+  @media (max-width: 350px) and (max-height: 620px) {
+    top: 40vh;
+  }
+
+  // ranged media query
+  @media (min-width: 351px) and (min-height: 621px) {
+    @media (max-width: 401px) and (max-height: 800px) {
+      top: 7em;
+    }
+  }
+
+  @media (min-width: 402px) and (min-height: 801px) {
+    top: unset;
+  }
+
+  @media #{$sm} {
+    top: unset;
+  }
+
+  .card {
+    .mat-card-header-text {
+      margin: 0px;
+    }
+
+    .mat-card-header-text .mat-card-title {
+      margin: 0px 0px 0.33rem;
+    }
+
+    // .mat-card-actions .mat-button-base {
+    //     padding: 0px;
+    //     font-size: 130%;
+    //     margin-bottom: 15px;
+    // }
+  }
+}
+
+// .mat-button.cta .mat-button-wrapper > .mat-icon,
+// .mat-flat-button.cta .mat-button-wrapper > .mat-icon,
+// .mat-stroked-button.cta .mat-button-wrapper > .mat-icon,
+// .mat-raised-button.cta .mat-button-wrapper > .mat-icon {
+//     padding: 0px 8px 0px 0px;
+// }
+
+/* ******************** */
+/* Public Landing Pages */
+/* ******************** */
+
+header.landing-page {
+  display: flex;
+  position: relative;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  height: (1 - math.div(5, 8)) * 100vh; //fibonacci ratio
+  max-height: unset;
+  background-color: $theme-primary;
+  background-size: cover;
+  background-position: center 100% - ((math.div(5, 8) * 100));
+  background-repeat: no-repeat;
+  margin-bottom: 3em;
+
+  // devices on "Portrait" orientation
+  @media (min-width: 351px) and (min-height: 621px) {
+    @media (max-width: 1024px) and (max-height: 1400px) {
+      height: (math.div(3, 8)) * 100vh;
+    }
+  }
+
+  @media #{$lg} {
+    height: math.div(5, 8) * 100vh;
+    background-position: center 100% - ((math.div(5, 8) * 100));
+    margin-bottom: 3em;
+  }
+}
+
+header .heading-container-landing {
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba($theme-primary, 0.75);
+  padding: 0 1.25pc 0.5pc 17.25vw;
+  margin-bottom: 3pc;
+  z-index: 1;
+
+  .hero-heading {
+    margin: 0;
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: capitalize;
+    color: #fff;
+
+    @media #{$sm} {
+      font-size: 2.25em;
+    }
+
+    @media #{$lg} {
+      font-size: 3em;
+    }
+  }
+}
+
+#bodyContent.landing {
+  position: relative;
+
+  > article,
+  > div,
+  > main,
+  > section {
+    padding: 0px 24px;
+  }
+
+  //special adjustments for mobile devices
+  @media (max-width: 350px) and (max-height: 620px) {
+    top: unset;
+  }
+
+  // ranged media query
+  @media (min-width: 351px) and (min-height: 621px) {
+    @media (max-width: 401px) and (max-height: 800px) {
+      top: unset;
+    }
+  }
+
+  @media (min-width: 402px) and (min-height: 801px) {
+    top: unset;
+  }
+
+  @media #{$sm} {
+    top: unset;
+  }
+}
+
+.pub-cont-container {
+  main,
+  [role='main'] {
+    .content-header {
+      padding-left: 0px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 0.38em;
+
+      @media #{$md} {
+        margin-top: 0.667em;
+      }
+    }
+
+    .mat-card {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-top: 0px;
+      }
+    }
+  }
+
+  section {
+    margin-bottom: 1.5em;
+  }
+}
+
+.wrap-rows {
+  display: block;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-flow: column wrap;
+  max-height: unset;
+}
+
+.wrap-rows.end-xs {
+  @media #{$xs} {
+    display: flex;
+    max-height: 150px;
+  }
+}
+
+.wrap-rows.end-sm {
+  @media #{$sm} {
+    display: flex;
+    max-height: 150px;
+  }
+}
+
+.wrap-rows.end-md {
+  @media #{$md} {
+    display: flex;
+    max-height: 150px;
+  }
+}
+
+.wrap-rows.end-lg {
+  @media #{$lg} {
+    display: flex;
+    max-height: 150px;
+  }
+}
+
+.wrap-rows.end-xl {
+  @media #{$xl} {
+    display: flex;
+    max-height: 150px;
+  }
+}
+
+.stylized-section {
+  position: relative;
+  background-size: cover;
+  background-position: center math.div(3, 8) * 100%;
+  background-repeat: no-repeat;
+  background-blend-mode: luminosity;
+  background-color: $theme-primary; // colour to blend with luminosity mode
+  padding: 50px 15px;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.66667);
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  > * {
+    z-index: 1;
+  }
+
+  .title {
+    font-size: 1.8em;
+    font-weight: 900;
+    @include zeroAll();
+  }
+
+  @media #{$sm} {
+    padding: 0;
+    min-height: math.div(3, 8) * 100vh;
+  }
+}
+
+/* ******************************* */
+/* The Secure Area Layout Defaults */
+/* ******************************* */
+
+.pageMain {
+  text-align: unset;
+  padding-bottom: 3em;
+
+  mat-card {
+    margin-bottom: 30px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .mat-card-title {
+    color: $sys-black;
+    margin-bottom: 0.3em;
+    margin-left: 8px;
+  }
+
+  $defaultAppContentHeaderSize: 33px;
+
+  h1 {
+    font-size: $defaultAppContentHeaderSize;
+  }
+
+  h2,
+  .mat-card-title {
+    font-size: $defaultAppContentHeaderSize * 0.9;
+  }
+
+  h2.file-name-header {
+    margin-left: 16px;
+  }
+
+  h3 {
+    font-size: $defaultAppContentHeaderSize * 0.75;
+  }
+
+  h4 {
+    font-size: $defaultAppContentHeaderSize * 0.6;
+  }
+
+  h5 {
+    font-size: $defaultAppContentHeaderSize * 0.55;
+  }
+
+  h6 {
+    font-size: $defaultAppContentHeaderSize * 0.5;
+  }
+
+  p {
+    margin: auto auto 0.3em 8px;
+  }
+
+  // but if you're inside a list, remove margins:
+  ul,
+  ol {
+    > li {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        @include zeroAll();
+      }
+    }
+  }
+
+  ul.no-bullet {
+    margin: 20px 0px 20px 8px;
+  }
+
+  //tables
+  .mat-table,
+  .mat-card .mat-table {
+    width: 960px;
+
+    @media #{$md} {
+      width: 100%;
+    }
+
+    tr td {
+      word-break: break-all;
+      font-size: 14px;
+
+      @media #{$xl} {
+        font-size: 16px;
+      }
+    }
+
+    tr td:not(:first-child) {
+      padding-left: 8px;
+    }
+
+    tr td:not(:last-child) {
+      padding-right: 8px;
+    }
+  }
+
+  .mat-table thead tr > th {
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  // tabs
+  .mat-tab-body {
+    padding: 15px;
+
+    .mat-tab-body-content {
+      overflow: unset;
+    }
+  }
+
+  // Expansion Panel
+  .mc-wrap-responsive {
+    .mat-expansion-panel {
+      min-width: unset;
+
+      .mat-expansion-panel-header-description {
+        display: none;
+      }
+
+      @media #{$md} {
+        min-width: unset;
+
+        .mat-expansion-panel-header-description {
+          display: flex;
+        }
+      }
+    }
+
+    .mat-expansion-panel.mat-expanded {
+      min-width: 960px;
+
+      .mat-expansion-panel-header-description {
+        display: flex;
+      }
+
+      @media #{$md} {
+        min-width: unset;
+      }
+    }
+  }
+
+  // buttons
+  // .mat-button-base {
+  //     margin-left: 8px;
+  //     margin-right: 8px;
+  //     margin-bottom: 0.4em;
+  // }
+
+  .mat-form-field {
+    display: block;
+  }
+
+  .mat-form-field.mat-form-field-should-float {
+    .mat-input-element,
+    .mat-form-field-label-wrapper label {
+      margin-left: 4px;
+    }
+  }
+
+  //input fields
+
+  .mat-form-field-type-mat-input .mat-form-field-wrapper,
+  .mat-form-field-type-mat-input .mat-form-field-label-wrapper label,
+  .mat-form-field-type-mat-select .mat-form-field-wrapper,
+  .mat-form-field-type-mat-select .mat-form-field-label-wrapper label {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  // ...except for paginator page size select
+  .mat-paginator-page-size-select.mat-form-field-type-mat-select .mat-form-field-wrapper {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  //mat-input placeholders on column filters...
+  .mat-header-cell .mat-input-element::-webkit-input-placeholder {
+    width: 88%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // radio buttons
+  .mat-radio-button .mat-radio-label {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  // mat-error
+  .mat-error {
+    margin-left: 8px;
+  }
+
+  // Input boxes on Table Headers
+  th.mat-header-cell {
+    .mat-form-field {
+      width: 80%;
+      max-width: 240px;
+
+      .mat-form-field-wrapper,
+      .mat-form-field-flex {
+        @include zeroAll();
+      }
+
+      .mat-form-field-wrapper {
+        padding-right: 15px;
+      }
+
+      .mat-form-field-infix {
+        padding-top: 12px;
+        padding-bottom: 8px;
+        border: none;
+      }
+
+      .mat-input-element {
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $sys-gray;
+      }
+
+      .mat-select {
+        width: 80%;
+        font-size: 12px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $sys-gray;
+      }
+
+      .mat-select .mat-select-value {
+        padding-left: 15px;
+      }
+
+      .mat-select .mat-select-arrow-wrapper {
+        transform: translate(15px, 0px);
+
+        @media #{$lg} {
+          transform: translate(25px, 0px);
+        }
+      }
+    }
+  }
+
+  th.mat-header-cell:not(:first-child) {
+    padding-left: 8px;
+  }
+
+  th.mat-header-cell:not(:last-child) {
+    padding-right: 8px;
+  }
+}
+
+#roster .heading-edit-form,
+#roster .heading-container,
+#roster .flex-action-bar {
+  .mat-form-field-wrapper {
+    @include zeroAll();
+  }
+
+  .mat-form-field-wrapper .mat-form-field-infix {
+    padding: 13px 15px 8px 3px;
+    border: 0px none;
+  }
+
+  .mat-button-base {
+    min-width: 36px;
+  }
+
+  .mat-button-wrapper {
+    line-height: 0px;
+  }
+
+  // specific override for mat-select
+  .mat-form-field.mat-form-field-type-mat-select .mat-form-field-flex {
+    padding: 0.65rem 0.75em 0 0.75em;
+  }
+}
+
+#roster .flex-action-bar .mat-form-field-wrapper .mat-form-field-infix {
+  padding: 6px 0px;
+}
+
+.details-container {
+  margin: 0px 0px 1.5em 3.7vw;
+  max-width: 90%;
+
+  // .mat-button-base {
+  //     margin: 0px;
+  // }
+
+  .vacc-status-grid {
+    display: flex;
+    gap: 24px;
+    flex-flow: column wrap;
+
+    .vacc-status-box {
+      padding: 8px 15px;
+      background-color: tint($theme-primary, 85%);
+      border-radius: 8px;
+      flex-grow: 1;
+      flex-basis: 100%;
+      max-width: 300px;
+
+      @media #{$sm} {
+        flex-grow: 1;
+        flex-basis: math.div(4, 12) * 100%;
+      }
+    }
+
+    @media #{$sm} {
+      flex-flow: row nowrap;
+    }
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $theme-tertiary;
+    margin: 0px;
+  }
+}
+
+// for top-nav (secure, public) mat-icon buttons
+.mat-flat-button.topnav-buttons,
+.mat-button.topnav-buttons {
+  .mat-icon,
+  .material-icons {
+    font-size: 16px;
+    height: unset;
+    width: auto;
+  }
+}
+
+//mat-slide-toggle edits // advanced filter // Sch Mod
+.advanced-filter-dialog .mat-slide-toggle {
+  margin-bottom: 1.25pc;
+}

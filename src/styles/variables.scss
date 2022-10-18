@@ -1,0 +1,80 @@
+@use 'sass:math';
+// This SCSS file will house, well, Variables, obviously, but also functions, mixins, and other programmatic stuff in SCSS/SaSS
+
+// CAIR3 POC Colours
+// split-complimentary theme
+$theme-primary: rgb(0, 150, 215);
+$theme-secondary: rgb(240, 75, 25);
+$theme-tertiary: rgb(5, 21, 94);
+
+// the rest
+$sys-black: rgb(0, 0, 0);
+$sys-darkgray: rgb(90, 90, 90);
+$sys-gray: rgb(145, 145, 150);
+$sys-lightgray: rgb(233, 235, 238);
+$sys-white: rgb(255, 255, 255);
+
+//Material Color Design
+$mat-card-container: #fafafa;
+$mat-error-red: rgb(244, 67, 54); // Material Red700
+$mat-red: $mat-error-red;
+$mat-success-green: rgb(0, 200, 83); // Material GreenA700
+$mat-green: $mat-success-green;
+$mat-warning-orange: rgb(239, 108, 0); // Material Orange800
+$mat-orange: $mat-warning-orange;
+
+// ========== Media Queries
+// based on Material breakpoint max width
+$w-xs: 320;
+$w-sm: 600;
+$w-md: 960;
+$w-lg: 1280;
+$w-xl: 1920;
+$xs: 'only screen and (min-width: #{$w-xs}px)';
+$sm: 'only screen and (min-width: #{$w-sm}px)';
+$md: 'only screen and (min-width: #{$w-md}px)';
+$lg: 'only screen and (min-width: #{$w-lg}px)';
+$xl: 'only screen and (min-width: #{$w-xl}px)';
+
+$strict-sm: '(min-width: #{$w-sm}px) and (max-width: 959px)';
+$strict-md: '(min-width: #{$w-md}px) and (max-width: 1279px)';
+$strict-lg: '(min-width: #{$w-lg}px) and (max-width: 1919px)';
+
+// Didn't define handset, tablet, & web and their landscape and portrait variants.
+
+// Font variables
+$headerFont: 'Lato', Roboto, 'Helvetica Nueue', sans-serif;
+$bodyFont: 'Lato', Roboto, 'Helvetica Nueue', sans-serif;
+$mono: 'Consolas', 'Menlo', 'Courier New', monospace;
+
+// Mixins
+@mixin zeroAll() {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+//Animate in CSS using transitions
+@mixin animate($pr, $func, $millisec) {
+    transition-property: $pr;
+    transition-timing-function: $func;
+    transition-duration: math.div($millisec, 1000) * 1s;
+}
+
+@mixin verticalCenter() {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@function tint($color, $percentage) {
+    @return mix(#fff, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+    @return mix(#000, $color, $percentage);
+}

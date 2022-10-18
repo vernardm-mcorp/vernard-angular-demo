@@ -1,0 +1,42 @@
+// This SCSS file contains RESETS for HTML elements (ones which you find needs resetting on every first instance. (for example, if Angular defines something by default with margins or paddings that are too much but it doesn't work well with your project defined styles, reset them here.
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+p,
+blockquote,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+strong,
+em {
+  display: inline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}

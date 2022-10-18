@@ -1,0 +1,853 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use 'sass:math';
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $demo-deploy-primary: mat.define-palette(mat.$indigo-palette);
+// $demo-deploy-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $demo-deploy-warn: mat.define-palette(mat.$red-palette);
+
+// // Create the theme object. A theme consists of configurations for individual
+// // theming systems such as "color" or "typography".
+// $demo-deploy-theme: mat.define-light-theme((
+//   color: (
+//     primary: $demo-deploy-primary,
+//     accent: $demo-deploy-accent,
+//     warn: $demo-deploy-warn,
+//   )
+// ));
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include mat.all-component-themes($demo-deploy-theme);
+
+@import '@angular/material/theming';
+@import './variables.scss';
+
+// THis SCSS contains Angular Material defined customisations
+
+//define custom palette to Material
+$primary: (
+  Main: $theme-primary,
+  Light: tint($theme-primary, 15%),
+  Dark: shade($theme-primary, 25%),
+  contrast: (
+    Main: $sys-white,
+    Light: $sys-black,
+    Dark: $sys-white,
+  ),
+);
+$accent: (
+  Main: $theme-secondary,
+  Light: tint($theme-secondary, 15%),
+  Dark: shade($theme-secondary, 25%),
+  contrast: (
+    Main: $sys-white,
+    Light: $sys-white,
+    Dark: $sys-white,
+  ),
+);
+
+$cdph-cair3-poc-primary: mat.define-palette($primary, Main, Light, Dark);
+$cdph-cair3-poc-accent: mat.define-palette($accent, Main, Light, Dark);
+$cdph-cair3-poc-warn: mat.define-palette(mat.$red-palette);
+
+//Configure theming (Colours)
+$cdph-cair3-poc-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $cdph-cair3-poc-primary,
+      accent: $cdph-cair3-poc-accent,
+      warn: $cdph-cair3-poc-warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($cdph-cair3-poc-theme);
+
+// Configure Typography
+$cdph-cair3-poc-typography: mat.define-typography-config(
+  $display-4:
+    mat.define-typography-level(initial, initial, initial, $font-family: $headerFont, $letter-spacing: initial),
+  $display-3: mat.define-typography-level(initial, initial, initial, $font-family: $headerFont),
+  $display-2: mat.define-typography-level(initial, initial, initial, $font-family: $headerFont),
+  $display-1: mat.define-typography-level(initial, initial, initial, $font-family: $headerFont),
+  $headline: mat.define-typography-level(38px, 112px, 900, $font-family: $headerFont),
+  $title: mat.define-typography-level(36px, 32px, 900, $font-family: $headerFont),
+  $subheading-2: mat.define-typography-level(20px, 28px, 700, $font-family: $headerFont),
+  $subheading-1: mat.define-typography-level(24px, 24px, 400, $font-family: $headerFont),
+  $body-2: mat.define-typography-level(18px, 24px, 700, $font-family: $bodyFont),
+  $body-1: mat.define-typography-level(16px, 24px, 400, $font-family: $bodyFont),
+  $caption: mat.define-typography-level(14px, 20px, 400, $font-family: $bodyFont),
+  $button: mat.define-typography-level(16px, 14px, 500, $font-family: $bodyFont),
+  $input: mat.define-typography-level(inherit, 1.125, 400, $font-family: $bodyFont),
+);
+
+@include mat.core($cdph-cair3-poc-typography);
+
+/* ************************************************************** */
+/* SPECIFIC Material Overrides for app specific style definitions */
+/* ************************************************************** */
+
+::ng-deep {
+  @for $i from 1 to 6 {
+    .h#{$i},
+    .mat-card-title.h#{$i} {
+      @if $i == 1 {
+        font-size: 38px;
+      } @else if $i == 2 {
+        font-size: 36px;
+      } @else if $i == 3 {
+        font-size: 32px;
+      } @else if $i == 4 {
+        font-size: 28px;
+      } @else if $i == 5 {
+        font-size: 24px;
+      } @else if $i <= 6 {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+//Create Material Colour parameters
+.mat-success {
+  background-color: $mat-success-green;
+  color: #fff;
+}
+
+.mat-error {
+  background-color: $mat-error-red;
+  color: #fff;
+}
+
+.mat-warning {
+  background-color: $mat-warning-orange;
+  color: #fff;
+}
+
+.mat-success-text,
+.mat-error-text,
+.mat-warning-text {
+  background-color: transparent;
+}
+
+.mat-success-text,
+.text-success {
+  color: $mat-success-green;
+}
+
+.mat-error-text,
+.text-red,
+.text-error {
+  color: $mat-error-red;
+}
+
+.mat-warning-text,
+.text-warning {
+  color: $mat-warning-orange;
+}
+
+//override mat-select fonts
+.mat-select,
+.mat-select .mat-select-value-text {
+  font-family: $bodyFont;
+}
+
+// input field error hints (override .mat-error base)
+.mat-error.ng-star-inserted {
+  background-color: transparent;
+  color: $mat-error-red;
+}
+
+// ALL Button overrides for the extra colour parameters
+::ng-deep .mat-button.mat-button-base[color='warning'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-warning-orange;
+  }
+}
+
+::ng-deep .mat-stroked-button.mat-button-base[color='warning'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-warning-orange;
+  }
+}
+
+::ng-deep .mat-icon-button.mat-button-base[color='warning'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-warning-orange;
+  }
+}
+
+::ng-deep .mat-button.mat-button-base[color='success'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-success-green;
+  }
+}
+
+::ng-deep .mat-stroked-button.mat-button-base[color='success'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-success-green;
+  }
+}
+
+::ng-deep .mat-icon-button.mat-button-base[color='success'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $mat-success-green;
+  }
+}
+
+// the yellow text on accent stroked-button has no contrast, this will fix (per WCAG Contrast accessibility)
+// ::ng-deep .mat-button.mat-button-base[color='accent'] {
+//     background-color: inherit;
+
+//     .mat-button-wrapper {
+//         color: shade($theme-secondary, 15%);
+//     }
+// }
+
+::ng-deep .mat-stroked-button.mat-button-base[color='accent'] {
+  background-color: inherit;
+
+  .mat-button-wrapper {
+    color: $theme-secondary;
+  }
+}
+
+// general config on buttons for the public page
+
+// ::ng-deep .mat-button.mat-button-base,
+// .mat-flat-button.mat-button-base,
+// .mat-raised-button.mat-button-base,
+// .mat-stroked-button.mat-button-base {
+//     line-height: 36px;
+
+//     @media #{$lg} {
+//         line-height: 32px;
+//     }
+// }
+
+// ::ng-deep .mat-flat-button .mat-button-wrapper,
+// .mat-raised-button .mat-button-wrapper,
+// .mat-flat-button .mat-button-wrapper,
+// .mat-button .mat-button-wrapper {
+//     font-family: $bodyFont;
+//     line-height: normal;
+// }
+
+// ::ng-deep #bodyContent span.mat-button-wrapper {
+//     display: flex;
+//     padding: 8px;
+//     max-width: 200px;
+//     white-space: pre-line;
+//     word-break: break-word;
+//     align-items: center;
+//     gap: 8px;
+
+//     @media #{$sm} {
+//         max-width: inherit;
+//     }
+// }
+
+// ::ng-deep #bodyContent .small span.mat-button-wrapper {
+//     padding: 0px;
+// }
+
+// ::ng-deep .mat-button.mat-button-base.small,
+// .mat-flat-button.mat-button-base.small,
+// .mat-raised-button.mat-button-base.small,
+// .mat-stroked-button.mat-button-base.small,
+// #bodyContent .mat-button.mat-button-base.small,
+// #bodyContent .mat-flat-button.mat-button-base.small,
+// #bodyContent .mat-raised-button.mat-button-base.small,
+// #bodyContent .mat-stroked-button.mat-button-base.small {
+//     line-height: normal;
+// }
+
+// ::ng-deep .mat-flat-button.small .mat-button-wrapper,
+// .mat-raised-button.small .mat-button-wrapper,
+// .mat-flat-button.small .mat-button-wrapper,
+// .mat-button.small .mat-button-wrapper {
+//     padding-top: 0px;
+// }
+
+// // mini fabs
+// ::ng-deep .mat-mini-fab.mat-button-base .mat-button-wrapper {
+//     line-height: 1.75pc;
+//     font-size: 18px;
+// }
+
+// // return the flat buttons in the secure area to standard
+// ::ng-deep .pageMain {
+//     .mat-button.mat-button-base,
+//     .mat-flat-button.mat-button-base,
+//     .mat-flat-button .mat-button-wrapper,
+//     .mat-button .mat-button-wrapper {
+//         line-height: 36px;
+//     }
+
+//     // add icon spacing
+//     .mat-button-base .mat-button-wrapper .mat-icon,
+//     .mat-button-base .mat-button-wrapper .ng-fa-icon {
+//         padding-left: 4px;
+//         padding-right: 4px;
+//     }
+// }
+
+::ng-deep .mat-card,
+.mat-card .mat-card-content,
+.mat-card .mat-card-content p {
+  @include mat.typography-level($cdph-cair3-poc-typography, 'body-1');
+}
+
+::ng-deep .mat-card .mat-card-header,
+.mat-card .mat-card-header .mat-card-header-text .mat-card-title {
+  @include mat.typography-level($cdph-cair3-poc-typography, 'title');
+}
+
+// ::ng-deep .menu-items .mat-button.mat-accent,
+// ::ng-deep .menu-items .mat-expansion-panel.parent {
+//     background-color: initial;
+//     min-height: 48px;
+//     @include animate(background-color, ease-out, 320);
+
+//     &:hover {
+//         background-color: rgba($theme-secondary, 0.5);
+//     }
+
+//     &:active,
+//     &:focus {
+//         background-color: rgba($theme-secondary, 0.15);
+//     }
+
+//     .mat-expansion-panel-header {
+//         height: 48px;
+
+//         @media #{$sm} {
+//             padding: 5px 0px;
+//             height: 28px;
+//         }
+//     }
+
+//     // original controller: .mat-expansion-panel-header-title, .mat-expansion-panel-header-description
+//     .mat-expansion-panel-header-title {
+//         justify-content: center;
+//         margin: 0px;
+//     }
+
+//     @media #{$sm} {
+//         min-height: 28px;
+//     }
+// }
+
+// ::ng-deep .menu-items .mat-expansion-panel.parent.mat-expanded {
+//     background-color: #fff;
+
+//     .mat-expansion-panel-header.mat-expanded {
+//         height: auto;
+//         background-color: $theme-secondary;
+//     }
+// }
+
+// ::ng-deep .menu-items .mat-button.mat-accent .mat-button-wrapper,
+// ::ng-deep .menu-items .mat-flat-button.mat-accent .mat-button-wrapper,
+// ::ng-deep .menu-items .mat-expansion-panel.parent .mat-expansion-panel-header-title {
+//     border-radius: 0;
+//     font-size: 16px;
+//     font-family: $bodyFont;
+//     font-weight: 500;
+//     color: $sys-black;
+//     text-transform: uppercase;
+//     @include animate(color, ease-out, 320);
+
+//     &:active,
+//     &:focus {
+//         color: $theme-primary;
+//     }
+
+//     @media #{$sm} {
+//         font-size: 14px;
+//     }
+// }
+
+// ::ng-deep .menu-items .mat-button.mat-accent.active .mat-button-wrapper,
+// .menu-items .mat-flat-button.mat-accent.active .mat-button-wrapper,
+// ::ng-deep .menu-items .mat-expansion-panel.parent.active .mat-expansion-panel-header-title {
+//     color: $theme-primary;
+
+//     &:active,
+//     &:focus {
+//         color: $theme-tertiary;
+//     }
+// }
+
+//submenu controller
+// ::ng-deep .menu-items .mat-expansion-panel-content,
+// ::ng-deep .menu-items .mat-expansion-panel-content .mat-expansion-panel-body {
+//     padding: 0px;
+// }
+
+// ::ng-deep .mobile-view {
+//     .navigation-menu .mat-flat-button.mat-accent {
+//         display: inline-block;
+//         margin: 0 10px;
+//     }
+
+//     .navigation-menu .mat-button.mat-primary {
+//         display: block;
+//         margin: 0.8em auto;
+//     }
+
+//     .menu-items ul li .mat-button.mat-accent {
+//         width: 100%;
+
+//         &:hover,
+//         &:focus {
+//             background-color: $theme-secondary;
+//         }
+//     }
+
+//     .menu-items .submenu {
+//         background-color: rgba($sys-lightgray, 0.33);
+//     }
+
+//     .menu-items .submenu li .mat-button {
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         width: 100%;
+//         min-height: 32px;
+//     }
+
+//     .menu-items .submenu li .mat-button .mat-button-wrapper {
+//         font-size: 14px;
+//         text-transform: uppercase;
+//         color: $sys-darkgray;
+
+//         @media #{$sm} {
+//             font-size: 12px;
+//         }
+//     }
+
+//     .menu-items .submenu li .mat-button.active .mat-button-wrapper {
+//         color: $theme-primary;
+//     }
+// }
+
+// ::ng-deep .expandable-items {
+//     .mat-expansion-panel.mat-expanded {
+//         .mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title,
+//         .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after {
+//             color: #fff;
+//         }
+//     }
+// }
+
+// ::ng-deep .mat-toolbar.private-topnav h1.top-nav-title {
+//     position: relative;
+//     margin: 0 auto;
+//     left: 0%;
+//     color: #fff;
+//     font-size: 18px;
+//     text-align: center;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     width: 66.667vw;
+//     overflow: hidden;
+
+//     @media #{$md} {
+//         display: block;
+//         justify-content: unset;
+//         align-items: unset;
+//         font-size: 21.5px;
+//         text-align: left;
+//         left: 15px;
+//         width: auto;
+//     }
+// }
+
+// ::ng-deep .mat-menu-panel.secure-nav-mobilemenu .mat-menu-item {
+//     font-weight: 500;
+//     text-transform: uppercase;
+// }
+
+// the default material disabled grey color has a non-compliant contrast, this will fix (per WCAG Contrast accessibility)
+::ng-deep .mat-stroked-button.mat-button-base.mat-button-disabled {
+  .mat-button-wrapper {
+    color: $sys-gray;
+  }
+}
+
+::ng-deep {
+  .mat-flat-button.mat-button-base.mat-button-disabled[disabled='true'],
+  .mat-raised-button.mat-button-base.mat-button-disabled[disabled='true'],
+  .mat-fab.mat-button-base.mat-button-disabled[disabled='true'],
+  .mat-mini-fab.mat-button-base.mat-button-disabled[disabled='true'] {
+    background-color: $sys-gray;
+
+    .mat-button-wrapper {
+      color: $mat-card-container;
+    }
+  }
+}
+
+// mat-slide-toggle overrides
+.mat-slide-toggle-content {
+  font-family: $bodyFont;
+  line-height: 1.25pc;
+}
+
+::ng-deep .mat-slide-toggle-label .mat-slide-toggle-content {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// make 400 the default font weight. 300 seems to be a tad unreadable.
+::ng-deep .mat-card,
+.mat-card .mat-card-content {
+  font-weight: 400;
+}
+
+// secure area side nav
+::ng-deep .secure-side-nav .mat-expansion-panel,
+::ng-deep .secure-side-nav .mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+}
+
+// progress bar color indicator
+::ng-deep .mat-progress-bar.error {
+  svg.mat-progress-bar-background {
+    fill: tint($mat-error-red, 80);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: tint($mat-error-red, 80);
+  }
+
+  .mat-progress-bar-fill {
+    &:after {
+      background-color: $mat-error-red;
+    }
+  }
+}
+
+::ng-deep .mat-progress-bar.complete {
+  svg.mat-progress-bar-background {
+    fill: tint($mat-success-green, 80);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: tint($mat-success-green, 80);
+  }
+
+  .mat-progress-bar-fill {
+    &:after {
+      background-color: $mat-success-green;
+    }
+  }
+}
+
+::ng-deep .mat-progress-bar.progress {
+  svg.mat-progress-bar-background {
+    fill: tint($theme-primary, 50);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: tint($theme-primary, 50);
+  }
+
+  .mat-progress-bar-fill {
+    &:after {
+      background-color: $theme-primary;
+    }
+  }
+}
+
+::ng-deep .mat-progress-bar.default {
+  svg.mat-progress-bar-background {
+    fill: tint($sys-gray, 80);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: tint($sys-gray, 80);
+  }
+
+  .mat-progress-bar-fill {
+    &:after {
+      background-color: $sys-gray;
+    }
+  }
+}
+
+// call-to-action type button override
+// ::ng-deep .mat-flat-button.cta,
+// ::ng-deep .mat-raised-button.cta,
+// ::ng-deep .mat-stroked-button.cta,
+// ::ng-deep .mat-fab.cta,
+// ::ng-deep .mat-mini-fab.cta {
+//     display: block;
+//     max-width: 230px;
+//     padding: 16px 24px;
+//     line-height: normal;
+
+//     > .mat-button-wrapper {
+//         display: block;
+//         position: relative;
+//         white-space: normal;
+//         line-height: normal;
+//     }
+// }
+
+//icons in sentences or paragraphs
+p .mat-icon,
+span .mat-icon,
+li .mat-icon {
+  position: relative;
+  top: 0.12vh;
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+// mat-card action area
+::ng-deep .pageMain .mat-card {
+  > .mat-card-actions:first-child {
+    margin: 0px;
+    padding: 0 8px;
+  }
+
+  > .mat-card-actions:last-child {
+    margin: 0px;
+    padding: 0 8px 15px;
+    margin-bottom: 0px;
+    margin-top: 1em;
+  }
+}
+
+/*
+* for firefox:
+* mat-card-actions "align=" attribute does
+* not work in Firefox, using CSS instead.
+*/
+.mat-card-actions.center,
+.mat-card-actions.start,
+.mat-card-actions.left,
+.mat-card-actions.end,
+.mat-card-actions.right,
+.mat-card-actions.space-evenly,
+.mat-card-actions.space-around,
+.mat-card-actions.space-between,
+.mat-card-actions.baseline {
+  display: flex;
+  gap: 15px;
+}
+
+.mat-card-actions.center {
+  justify-content: center;
+}
+
+.mat-card-actions.start,
+.mat-card-actions.left {
+  justify-content: flex-start;
+}
+
+.mat-card-actions.end,
+.mat-card-actions.right {
+  justify-content: flex-end;
+}
+
+.mat-card-actions.space-evenly {
+  justify-content: space-evenly;
+}
+
+.mat-card-actions.space-around {
+  justify-content: space-around;
+}
+
+.mat-card-actions.space-between {
+  justify-content: space-between;
+}
+
+.mat-card-actions.baseline {
+  justify-content: baseline;
+}
+
+::ng-deep .mat-card .mat-card-actions.right .mat-button,
+::ng-deep .mat-card .mat-card-actions.right .mat-raised-button,
+::ng-deep .mat-card .mat-card-actions.right .mat-stroked-button {
+  margin: 0 5px 12px;
+
+  @media #{$md} {
+    margin: 0 5px;
+
+    &:last-child {
+      margin: 0px 0px 0px 5px;
+    }
+  }
+}
+
+// ::ng-deep .mat-dialog-actions {
+//     margin-bottom: auto;
+//     justify-content: center; //by default, justify mat-dialog-actions to center, to override, use the following classes below
+// }
+
+// dialog background darkener
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+// utilize ng-mat menu as a "pop-over" dialog
+.convert-popover,
+.mat-menu-panel.convert-popover {
+  max-width: 90vw;
+  padding: 8px 15px;
+
+  > .mat-menu-content {
+    min-width: unset;
+    overflow: auto;
+    max-height: 90vh;
+    padding-right: 8px;
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    @media #{$md} {
+      min-width: 200px;
+      max-height: 100 - (math.div(5, 8) * 100vh);
+    }
+  }
+
+  @media #{$md} {
+    max-width: 50vw;
+  }
+
+  @media #{$lg} {
+    max-width: 25vw;
+  }
+}
+
+// ng Mat's font size default for mat-option is 24px? Really?
+.mat-option {
+  font-size: 16px;
+}
+
+// for table header filter date pickers
+::ng-deep .table-header-filter {
+  .mat-datepicker-toggle .mat-button-base {
+    padding: 0px;
+    margin: 0px;
+  }
+  .mat-datepicker-toggle .mat-icon-button .mat-button-wrapper,
+  .mat-datepicker-toggle .mat-icon-button .mat-button-wrapper svg {
+    font-size: 12.67px;
+  }
+}
+
+/* ******* */
+/* DIALOGS */
+/* ******* */
+
+::ng-deep .mat-dialog-container {
+  padding: 0px;
+  background-color: transparent;
+  box-shadow: none;
+  overflow: unset;
+
+  .mat-dialog-subcontainer {
+    border: 3px $theme-primary solid;
+    background-color: #fafafa;
+    box-shadow: 3px 3px 12px 3px rgba(0, 0, 0, 0.33);
+    border-radius: 4px;
+  }
+
+  .mat-dialog-subcontainer .mat-dialog-title {
+    background-color: $theme-primary;
+    text-align: center;
+    padding: 0px 15px 3px;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1em;
+      color: #fff;
+      line-height: 1.12em;
+      margin: 0px;
+    }
+
+    h3 {
+      font-size: 0.88em;
+      line-height: 0.97em;
+    }
+    h4 {
+      font-size: 0.75em;
+      line-height: 0.8em;
+    }
+    h5,
+    h6 {
+      font-size: 0.667em;
+      line-height: 0.75em;
+    }
+  }
+
+  .mat-dialog-content {
+    margin: initial;
+    padding: 15px;
+  }
+
+  .mat-dialog-actions .mat-button {
+    min-height: 30px;
+    padding: 0px;
+  }
+}
+
+// global defs for mat-expansion-panels
+::ng-deep .mat-expansion-panel {
+  .mat-expansion-panel-header.mat-expanded {
+    height: 56px;
+  }
+
+  .mat-expansion-panel-content .mat-expansion-panel-body {
+    padding-bottom: 15px;
+    margin: 0px;
+
+    .panel-expanded {
+      margin: 0px;
+    }
+
+    p {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+::ng-deep .mat-expansion-panel.mat-expanded {
+  margin: 0px 0px 15px;
+}

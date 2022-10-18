@@ -1,0 +1,716 @@
+@use 'sass:math';
+
+// This SCSS file will house M-Corp's solution for Angular to build essential web development techniques that are commonly found in the Twitter Bootstrap framework or Material UI that somehow missed getting into Angular Material.
+
+/* ***** */
+/* START */
+/* ***** */
+
+// ========== Media Queries
+// based on Material breakpoint max width
+$w-xs: 320;
+$w-sm: 600;
+$w-md: 960;
+$w-lg: 1280;
+$w-xl: 1920;
+$xs: 'only screen and (min-width: #{$w-xs}px)';
+$sm: 'only screen and (min-width: #{$w-sm}px)';
+$md: 'only screen and (min-width: #{$w-md}px)';
+$lg: 'only screen and (min-width: #{$w-lg}px)';
+$xl: 'only screen and (min-width: #{$w-xl}px)';
+
+$strict-sm: '(min-width: #{$w-sm}px) and (max-width: 959px)';
+$strict-md: '(min-width: #{$w-md}px) and (max-width: 1279px)';
+$strict-lg: '(min-width: #{$w-lg}px) and (max-width: 1919px)';
+
+$all: 'only screen and (min-width: 0px)';
+
+.flex {
+  display: flex;
+}
+
+// *** define base container
+.mc-container,
+.mc-container-fluid {
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+
+  // literal row container, houses "col"
+  .mc-row {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-0.5 * var(--bs-gutter-x));
+    margin-left: calc(-0.5 * var(--bs-gutter-x));
+  }
+
+  .mc-row.nowrap {
+    flex-wrap: nowrap;
+  }
+  //Placement modifiers
+  .justify-baseline {
+    justify-content: baseline;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-right,
+  .justify-end {
+    justify-content: flex-end;
+  }
+  .justify-left,
+  .justify-start {
+    justify-content: flex-start;
+  }
+  .justify-space-evenly {
+    justify-content: space-evenly;
+  }
+  .justify-space-around {
+    justify-content: space-around;
+  }
+  .justify-space-between {
+    justify-content: space-between;
+  }
+  .align-items-start,
+  .align-items-left {
+    align-items: flex-start;
+  }
+  .align-items-end,
+  .align-items-right {
+    align-items: flex-end;
+  }
+  .align-items-center {
+    align-items: center;
+  }
+  .align-items-stretch {
+    align-items: stretch;
+  }
+
+  // *** Directional flow
+  .ltr,
+  .ttb,
+  .rtl,
+  .btt {
+    flex-wrap: nowrap; // set no wrap
+  }
+
+  // left to right
+  .ltr {
+    flex-direction: row;
+  }
+  // top to bottom
+  .ttb {
+    flex-direction: column;
+  }
+
+  .ttb-xs {
+    flex-direction: row;
+
+    @media #{$xs} {
+      flex-direction: column;
+    }
+  }
+
+  .ttb-sm {
+    flex-direction: row;
+
+    @media #{$sm} {
+      flex-direction: column;
+    }
+  }
+
+  .ttb-md {
+    flex-direction: row;
+
+    @media #{$md} {
+      flex-direction: column;
+    }
+  }
+
+  .ttb-lg {
+    flex-direction: row;
+
+    @media #{$lg} {
+      flex-direction: column;
+    }
+  }
+
+  .ttb-xl {
+    flex-direction: row;
+
+    @media #{$xl} {
+      flex-direction: column;
+    }
+  }
+  // right to left
+  .rtl {
+    flex-direction: row-reverse;
+  }
+  //bottom to top
+  .btt {
+    flex-direction: column-reverse;
+  }
+}
+
+.mc-container {
+  padding-left: 0px;
+  padding-right: 0px;
+  max-width: #{$w-md}px;
+
+  @media #{sm} {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  @media #{$xl} {
+    max-width: #{$w-lg}px; // container CLASS stops expanding the box from end to end
+  }
+
+  //I couldn't help it, I wanted something for 4k TVs LOL
+  @media only screen and (min-width: 3000px) {
+    max-width: 1920px;
+  }
+}
+
+.mc-container-fluid {
+  display: contents;
+  width: auto;
+  min-width: 100%;
+
+  @media #{sm} {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+// col modifiers
+.mc-container .mc-row,
+.mc-container-fluid .mc-row {
+  > .mcol,
+  > [class^='mcol-'] {
+    flex: 0 0 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-top: var(--bs-gutter-y);
+
+    > .grid-content {
+      padding: 8px;
+
+      @media #{$sm} {
+        padding: 8px 15px;
+      }
+      @media #{$lg} {
+        padding: 15px;
+      }
+    }
+  }
+
+  //more placement modifiers for inside col, but rare ones...
+  .align-self-start {
+    align-self: flex-start;
+  }
+  .align-self-end {
+    align-self: flex-end;
+  }
+  .align-self-center {
+    align-self: center;
+  }
+
+  //column orders
+  @for $i from 1 through 6 {
+    .order-#{$i} {
+      order: $i;
+    }
+  }
+
+  @for $i from 1 through 6 {
+    .order-xs-#{$i} {
+      @media #{$xs} {
+        order: $i;
+      }
+    }
+  }
+
+  @for $i from 1 through 6 {
+    .order-sm-#{$i} {
+      @media #{$sm} {
+        order: $i;
+      }
+    }
+  }
+
+  @for $i from 1 through 6 {
+    .order-md-#{$i} {
+      @media #{$md} {
+        order: $i;
+      }
+    }
+  }
+
+  @for $i from 1 through 6 {
+    .order-lg-#{$i} {
+      @media #{$lg} {
+        order: $i;
+      }
+    }
+  }
+
+  @for $i from 1 through 6 {
+    .order-xl-#{$i} {
+      @media #{$xl} {
+        order: $i;
+      }
+    }
+  }
+
+  // *** define the layouts with breakpoints // <=== THE GRID SYSTEM
+
+  // BASE (from a mobile first perspective, this is universal (applies to all device))
+  @for $i from 1 through 12 {
+    .mcol-#{$i} {
+      flex-basis: (100 * math.div($i, 12)) * 1%;
+      width: (100 * math.div($i, 12)) * 1%;
+    }
+  }
+  // anything below 599px (smallest devices)
+  @for $i from 1 through 12 {
+    .mcol-xs-#{$i} {
+      @media #{$xs} {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+  // up to 600px (modern smartphones)
+  @for $i from 1 through 12 {
+    .mcol-sm-#{$i} {
+      @media #{$sm} {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+  // up to 960px (modern smartphones and old CRT monitors LOL)
+  @for $i from 1 through 12 {
+    .mcol-md-#{$i} {
+      @media #{$md} {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+  // up to 1280px (modern smartphones and small laptops)
+  @for $i from 1 through 12 {
+    .mcol-lg-#{$i} {
+      @media #{$lg} {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  // up to 1920px (Screens)
+  @for $i from 1 through 12 {
+    .mcol-xl-#{$i} {
+      @media #{$xl} {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  .mcol-auto {
+    flex: 1 0 auto;
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-xs-portrait-#{$i} {
+      @media (min-height: 420px) {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-sm-portrait-#{$i} {
+      @media (min-width: #{$w-xs}px) and (min-height: #{$w-sm}px) {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-md-portrait-#{$i} {
+      @media (min-width: #{$w-sm}px) and (min-height: #{$w-md}px) {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-lg-portrait-#{$i} {
+      @media (min-width: #{$w-md}px) and (min-height: #{$w-lg}px) {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-xl-portrait-#{$i} {
+      @media (min-width: #{$w-lg}px) and (min-height: #{$w-xl}px) {
+        flex: 0 0 (100 * math.div($i, 12)) * 1%;
+        width: (100 * math.div($i, 12)) * 1%;
+      }
+    }
+  }
+}
+
+// make sure not to apply width attribute on top to bottom, bottom top
+.mc-container .mc-row.ttb,
+.mc-container .mc-row.btt,
+.mc-container-fluid .mc-row.ttb,
+.mc-container-fluid .mc-row.btt {
+  @for $i from 1 through 12 {
+    .mcol-#{$i} {
+      width: unset;
+    }
+  }
+  // anything below 599px (smallest devices)
+  @for $i from 1 through 12 {
+    .mcol-xs-#{$i} {
+      @media #{$xs} {
+        width: unset;
+      }
+    }
+  }
+  // up to 600px (modern smartphones)
+  @for $i from 1 through 12 {
+    .mcol-sm-#{$i} {
+      @media #{$sm} {
+        width: unset;
+      }
+    }
+  }
+  // up to 960px (modern smartphones and old CRT monitors LOL)
+  @for $i from 1 through 12 {
+    .mcol-md-#{$i} {
+      @media #{$md} {
+        width: unset;
+      }
+    }
+  }
+  // up to 1280px (modern smartphones and small laptops)
+  @for $i from 1 through 12 {
+    .mcol-lg-#{$i} {
+      @media #{$lg} {
+        width: unset;
+      }
+    }
+  }
+
+  // up to 1920px (Screens)
+  @for $i from 1 through 12 {
+    .mcol-xl-#{$i} {
+      @media #{$xl} {
+        width: unset;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-xs-portrait-#{$i} {
+      @media (min-height: 420px) {
+        width: unset;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-sm-portrait-#{$i} {
+      @media (min-width: #{$w-xs}px) and (min-height: #{$w-sm}px) {
+        width: unset;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-md-portrait-#{$i} {
+      @media (min-width: #{$w-sm}px) and (min-height: #{$w-md}px) {
+        width: unset;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-lg-portrait-#{$i} {
+      @media (min-width: #{$w-md}px) and (min-height: #{$w-lg}px) {
+        width: unset;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mcol-xl-portrait-#{$i} {
+      @media (min-width: #{$w-lg}px) and (min-height: #{$w-xl}px) {
+        width: unset;
+      }
+    }
+  }
+}
+
+//supplemental - add flex grid gaps
+@for $i from 1 through 32 {
+  .gap-#{$i} {
+    gap: #{$i}px;
+  }
+
+  .row-gap-#{$i} {
+    row-gap: #{$i}px;
+  }
+
+  .column-gap-#{$i} {
+    column-gap: #{$i}px;
+  }
+}
+
+//force-hide
+.hidden {
+  display: none !important;
+}
+
+/* ******************************** */
+/* Selective Display by Media Query */
+/* ******************************** */
+
+// hide...
+.mchide,
+.mchide-xs {
+  display: none !important;
+}
+
+// Hide < 600px w
+.mchide-sm {
+  @media #{$sm} {
+    display: none !important;
+  }
+}
+
+// Hide < 960px w
+.mchide-md {
+  @media #{$md} {
+    display: none !important;
+  }
+}
+
+// Hide < 1280px w
+.mchide-lg {
+  @media #{$lg} {
+    display: none !important;
+  }
+}
+
+// Hide < 1920px w
+.mchide-xl {
+  @media #{$xl} {
+    display: none !important;
+  }
+}
+
+// default display value for < 1920px w
+.mcshow-xl {
+  @media (max-width: 1599px) {
+    display: none !important;
+  }
+}
+
+// default display value for < 1280px w
+.mcshow-lg {
+  @media (max-width: 1279px) {
+    display: none !important;
+  }
+}
+
+// default display value for < 960px w
+.mcshow-md {
+  @media (max-width: 959px) {
+    display: none !important;
+  }
+}
+
+// default display value for < 600px w
+.mcshow-sm {
+  @media (max-width: 599px) {
+    display: none !important;
+  }
+}
+
+@for $i from 1 through 50 {
+  .padding-#{$i} {
+    padding: #{$i}px;
+  }
+}
+
+/* ************ */
+/* Alert Strips */
+/* ************ */
+
+.alert {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0px 12px;
+  line-height: 1.5rem;
+  background-color: #f5f5f5; //gray50
+  padding: 0.3rem 0.618rem 0.28rem;
+  margin: 15px auto;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  font-size: 100%;
+  color: #424242; //gray800
+
+  // if a material or fontawesome icon is included in alert
+  .mat-icon,
+  .ng-fa-icon svg.svg-inline--fa {
+    color: #424242;
+  }
+}
+
+.alert.info {
+  background-color: #00b0ff; //blueA400
+  color: #fff;
+  border-color: #bbdefb; //blue100
+
+  .mat-icon,
+  .ng-fa-icon svg.svg-inline--fa {
+    color: #0d47a1; //blue900
+  }
+}
+
+.alert.warning {
+  background-color: #ffeb3b; //yellow500
+  color: #000;
+  border-color: #fdd835; //yellow600
+
+  .mat-icon,
+  .ng-fa-icon svg.svg-inline--fa {
+    color: #f57f17; //yellow900
+  }
+}
+
+.alert.success {
+  background-color: #00c853; //green600
+  color: #fff;
+  border-color: #dcedc8; //lightgreen100
+
+  .mat-icon,
+  .ng-fa-icon svg.svg-inline--fa {
+    color: #b9f6ca; //greenA100
+  }
+}
+
+.alert.error {
+  background-color: #d50000; //redA700
+  color: #fff;
+  border-color: #ffebee; //red50
+
+  .mat-icon,
+  .ng-fa-icon svg.svg-inline--fa {
+    color: #ffcdd2; //red100
+  }
+}
+
+.alert.small {
+  font-size: 85%;
+}
+.alert.large {
+  padding: 0.33rem 1rem 0.3rem;
+  font-size: 105%;
+}
+.alert.x-large {
+  padding: 0.8rem 1rem 0.75rem;
+  font-size: 120%;
+}
+
+.alert p,
+.alert span {
+  margin: 0px;
+}
+
+/* ******* */
+/* General */
+/* ******* */
+
+.mc-flex {
+  display: flex;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.small {
+  font-size: 85%;
+  line-height: 1.33rem;
+}
+
+.large {
+  font-size: 105%;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+.x-large {
+  font-size: 120%;
+  font-weight: 900;
+  line-height: 1.75rem;
+}
+
+.sr-only {
+  @media screen {
+    display: none;
+  }
+}
+
+// Table containers - use to make data tables more readable on responsive
+.mc-wrap-responsive {
+  width: 100%;
+  max-height: 400px;
+  overflow: scroll;
+  margin-left: -8px;
+
+  table {
+    width: 960px;
+
+    @media #{$md} {
+      width: 100%;
+    }
+  }
+
+  @media #{$md} {
+    height: auto;
+    max-height: unset;
+    overflow: auto;
+  }
+
+  @media print {
+    width: unset;
+    overflow: initial;
+    max-height: unset;
+
+    table {
+      width: 100% !important;
+      tr > td {
+        @include zeroAll();
+        max-width: fit-content;
+      }
+    }
+  }
+}
