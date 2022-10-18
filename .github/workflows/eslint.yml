@@ -16,7 +16,7 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
-    - cron: '19 8 * * 2'
+    - cron: '15 12 * * 0'
 
 jobs:
   eslint:
@@ -48,3 +48,9 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.1
+        with:
+          # https://github.com/vernardm-mcorp/vernard-angular-demo/new/main?filename=.github%2Fworkflows%2Feslint.yml&workflow_template=code-scanning%2Feslint
+          always-auth: false
+          token: ${{ github.token }}
